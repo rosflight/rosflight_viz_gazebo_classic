@@ -30,7 +30,6 @@ def generate_launch_description():
     )
     use_sim_time = LaunchConfiguration('use_sim_time')
 
-    # TODO: check that this didn't break vimfly
     use_vimfly_arg = DeclareLaunchArgument(
         "use_vimfly",
         default_value="false",
