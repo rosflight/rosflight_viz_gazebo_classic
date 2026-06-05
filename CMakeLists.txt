@@ -14,17 +14,16 @@ if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE "Release")
 endif(NOT CMAKE_BUILD_TYPE)
 
-# Since Gazebo doesn't have an arm64 target, skip this package if gazebo is not found
+# Find packages
+find_package(gazebo_dev QUIET)
+find_package(gazebo_plugins QUIET)
 find_package(gazebo_ros QUIET)
-if(NOT gazebo_FOUND)
-  install(CODE "message(\"Gazebo not found, skipping Gazebo sim\")")
-  return()
+if(NOT gazebo_dev_FOUND OR NOT gazebo_plugins_FOUND OR NOT gazebo_ros_FOUND)
+  message(FATAL_ERROR
+    "rosflight_viz_gazebo_classic was found and ROS_DISTRO is humble, but Gazebo Classic dependencies were not found. "
+    "Install the Humble Gazebo Classic packages, for example.")
 endif()
 
-# Find packages
-find_package(gazebo_dev)
-find_package(gazebo_plugins REQUIRED)
-find_package(gazebo_ros REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(std_srvs REQUIRED)
 
